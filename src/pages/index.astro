@@ -25,18 +25,22 @@ const blogPosts = [
 ---
 
 <BlogLayout>
-	<h1>Welcome to My Astro Blog</h1>
-	<p>This is a demonstration of Astro's powerful static site generation capabilities.</p>
+	<div class="hero">
+		<h1>Welcome to My Astro Blog</h1>
+		<p class="lead">Explore the world of modern web development with Astro - where performance meets simplicity.</p>
+	</div>
 	
-	<section>
+	<section class="latest-posts">
 		<h2>Latest Posts</h2>
-		{blogPosts.map(post => (
-			<BlogPost 
-				title={post.title}
-				date={post.date}
-				description={post.description}
-				slug={post.slug}
-			/>
-		))}
+		<div class="posts-grid">
+			{blogPosts.map(post => (
+				<BlogPost 
+					title={post.title}
+					date={post.date}
+					description={post.description}
+					slug={post.slug}
+				/>
+			))}
+		</div>
 	</section>
 </BlogLayout>
