@@ -1,6 +1,6 @@
 ---
-import BlogLayout from '../layouts/BlogLayout.astro';
-import BlogPost from '../components/BlogPost.astro';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import BlogPost from '../../components/BlogPost.astro';
 
 const blogPosts = [
 	{
@@ -20,16 +20,27 @@ const blogPosts = [
 		date: "Feb 20, 2025",
 		description: "A step-by-step tutorial on how to build a performant blog with Astro and deploy it anywhere.",
 		slug: "building-a-blog-with-astro"
+	},
+	{
+		title: "Optimizing Astro Performance",
+		date: "Mar 5, 2025",
+		description: "Tips and tricks to make your Astro sites even faster and more efficient.",
+		slug: "optimizing-astro-performance"
+	},
+	{
+		title: "Using View Transitions in Astro",
+		date: "Mar 18, 2025",
+		description: "How to enhance user experience with smooth transitions between pages in Astro 4.0+.",
+		slug: "using-view-transitions-in-astro"
 	}
 ];
 ---
 
 <BlogLayout>
-	<h1>Welcome to My Astro Blog</h1>
-	<p>This is a demonstration of Astro's powerful static site generation capabilities.</p>
+	<h1>All Blog Posts</h1>
+	<p>Check out all the latest articles on Astro and web development.</p>
 	
-	<section>
-		<h2>Latest Posts</h2>
+	<div class="blog-list">
 		{blogPosts.map(post => (
 			<BlogPost 
 				title={post.title}
@@ -38,5 +49,11 @@ const blogPosts = [
 				slug={post.slug}
 			/>
 		))}
-	</section>
+	</div>
 </BlogLayout>
+
+<style>
+	.blog-list {
+		margin-top: 2rem;
+	}
+</style>
