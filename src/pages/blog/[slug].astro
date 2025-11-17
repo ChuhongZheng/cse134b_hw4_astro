@@ -2,7 +2,7 @@
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import FullBlogPost from '../../components/FullBlogPost.astro';
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
 	const blogPosts = {
 		"getting-started-with-astro": {
 			title: "Getting Started with Astro",
@@ -177,17 +177,197 @@ export default defineConfig({
 	};
 
 	return Object.keys(blogPosts).map(slug => ({
-		params: { slug },
-		props: { post: blogPosts[slug] },
+		params: { slug }
 	}));
+}
+
+// Mock data for blog posts - duplicate for frontmatter
+const blogPosts = {
+	"getting-started-with-astro": {
+		title: "Getting Started with Astro",
+		date: "Jan 15, 2025",
+		content: `
+			<p>Astro is a modern static site builder that delivers lightning-fast performance with a JavaScript-first approach. Unlike traditional frameworks that ship your entire application to the client, Astro only ships the parts that are absolutely necessary.</p>
+			
+			<h2>Why Choose Astro?</h2>
+			
+			<p>Astro offers several key advantages:</p>
+			
+			<ul>
+				<li><strong>Zero JavaScript by default:</strong> Only load JavaScript when you actually need it</li>
+				<li><strong>Bring Your Own Framework:</strong> Use React, Vue, Svelte, or any other UI framework</li>
+				<li><strong>Island Architecture:</strong> Send only interactive components to the client</li>
+				<li><strong>Great Performance:</strong> Built-in optimizations for fast loading</li>
+			</ul>
+			
+			<h2>Creating Your First Astro Project</h2>
+			
+			<p>To get started with Astro, you'll need Node.js installed. Then run:</p>
+			
+			<pre><code>npm create astro@latest my-blog
+cd my-blog
+npm run dev</code></pre>
+			
+			<p>This will scaffold a new Astro project and start the development server. You can now begin building your static site!</p>
+		`
+	},
+	"understanding-astro-islands": {
+		title: "Understanding Astro Islands",
+		date: "Feb 2, 2025",
+		content: `
+			<p>Astro's island architecture is a revolutionary approach to building web applications. Instead of shipping a whole page of JavaScript to the client, Astro sends only the interactive components (the "islands") that need JavaScript.</p>
+			
+			<h2>How Islands Work</h2>
+			
+			<p>In traditional frameworks like Next.js or Nuxt, the entire page is hydrated with JavaScript. With Astro, only components that have interactivity are sent to the browser:</p>
+			
+			<pre><code>// This component will be interactive in the browser
+---
+import MyInteractiveComponent from '../components/MyInteractiveComponent.astro';
+---
+
+<!-- Static HTML -->
+<h1>Welcome to my site</h1>
+<p>This content is static and requires zero JavaScript</p>
+
+<!-- Interactive "island" -->
+<MyInteractiveComponent client:load /></code></pre>
+			
+			<h2>Benefits of Island Architecture</h2>
+			
+			<ol>
+				<li><strong>Faster Initial Load:</strong> Less JavaScript to parse and execute</li>
+				<li><strong>Better Performance:</strong> Reduced bundle sizes mean faster interactions</li>
+				<li><strong>Improved SEO:</strong> Content is immediately available to search engines</li>
+				<li><strong>Enhanced User Experience:</strong> Faster time-to-content for visitors</li>
+			</ol>
+		`
+	},
+	"building-a-blog-with-astro": {
+		title: "Building a Blog with Astro",
+		date: "Feb 20, 2025",
+		content: `
+			<p>Astro is perfect for building blogs thanks to its excellent Markdown support and static site generation capabilities. In this guide, we'll walk through creating a performant blog with Astro.</p>
+			
+			<h2>Setting Up Markdown Support</h2>
+			
+			<p>Astro has built-in support for Markdown pages. Simply create a file with the .md extension in your src/pages directory:</p>
+			
+			<pre><code>---
+title: "My First Blog Post"
+description: "Learning how to build a blog with Astro"
+pubDate: "Jan 15, 2025"
+---
+
+# My First Blog Post
+
+Today we're learning how to build a blog with Astro!</code></pre>
+			
+			<h2>Creating Layout Components</h2>
+			
+			<p>For consistent styling across your blog, create reusable layout components:</p>
+			
+			<pre><code><!-- src/layouts/BlogLayout.astro -->
+---
+import BaseLayout from './BaseLayout.astro';
+---
+
+<BaseLayout>
+	<header>
+		<h1>My Astro Blog</h1>
+	</header>
+	<main>
+		<slot /> <!-- Page content goes here -->
+	</main>
+</BaseLayout></code></pre>
+			
+			<p>This modular approach makes it easy to maintain consistency throughout your site.</p>
+		`
+	},
+	"optimizing-astro-performance": {
+		title: "Optimizing Astro Performance",
+		date: "Mar 5, 2025",
+		content: `
+			<p>While Astro is fast by default, there are several techniques you can use to optimize your site even further.</p>
+			
+			<h2>Image Optimization</h2>
+			
+			<p>Use Astro's built-in Image component for automatic optimization:</p>
+			
+			<pre><code>---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/hero.jpg';
+---
+
+<Image src={heroImage} alt="Hero image" width={800} height={450} /></code></pre>
+			
+			<h2>Smart Component Hydration</h2>
+			
+			<p>Choose the right hydration strategy for your components:</p>
+			
+			<ul>
+				<li><code>client:load</code> - Load immediately</li>
+				<li><code>client:idle</code> - Load when browser is idle</li>
+				<li><code>client:visible</code> - Load when scrolled into view</li>
+				<li><code>client:media</code> - Load based on media query</li>
+			</ul>
+			
+			<h2>Code Splitting</h2>
+			
+			<p>Astro automatically splits your code for optimal delivery. Each page is compiled independently, ensuring users only download what they need.</p>
+		`
+	},
+	"using-view-transitions-in-astro": {
+		title: "Using View Transitions in Astro",
+		date: "Mar 18, 2025",
+		content: `
+			<p>View Transitions is a new browser API that enables smooth transitions between pages. Astro has built-in support for this feature.</p>
+			
+			<h2>Enabling View Transitions</h2>
+			
+			<p>Add the view-transitions integration to your Astro config:</p>
+			
+			<pre><code>// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import viewTransitions from '@astrojs/view-transitions';
+
+export default defineConfig({
+	integrations: [viewTransitions()]
+});</code></pre>
+			
+			<h2>Adding Transitions to Links</h2>
+			
+			<p>Simply add the transition:name attribute to elements you want to animate:</p>
+			
+			<pre><code><a transition:name="logo" href="/">
+	<img src="/logo.svg" alt="Logo" />
+</a></code></pre>
+			
+			<h2>Creating Custom Transitions</h2>
+			
+			<p>You can customize transitions with CSS:</p>
+			
+			<pre><code>::view-transition-old(logo),
+::view-transition-new(logo) {
+	animation-duration: 0.5s;
+}</code></pre>
+		`
+	}
+};
+
+const { slug } = Astro.params;
+const post = blogPosts[slug];
+
+if (!post) {
+	return Astro.redirect('/404');
 }
 ---
 
 <BlogLayout>
-	<div slot="title">{Astro.props.post.title} - My Astro Blog</div>
+	<div slot="title">{post.title} - My Astro Blog</div>
 	<FullBlogPost 
-		title={Astro.props.post.title}
-		date={Astro.props.post.date}
-		content={Astro.props.post.content}
+		title={post.title}
+		date={post.date}
+		content={post.content}
 	/>
 </BlogLayout>
