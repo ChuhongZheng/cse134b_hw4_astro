@@ -1,0 +1,172 @@
+---
+const themes = {
+	default: {
+		name: "Default",
+		colors: {
+			text: "#333",
+			background: "#fff",
+			header: "#2d3748",
+			footer: "#edf2f7"
+		},
+		font: "system-ui"
+	},
+	dark: {
+		name: "Dark Mode",
+		colors: {
+			text: "#e2e8f0",
+			background: "#1a202c",
+			header: "#2d3748",
+			footer: "#2d3748"
+		},
+		font: "Georgia, serif"
+	},
+	ocean: {
+		name: "Ocean Breeze",
+		colors: {
+			text: "#0c4a6e",
+			background: "#f0f9ff",
+			header: "#0ea5e9",
+			footer: "#7dd3fc"
+		},
+		font: "'Courier New', Courier, monospace"
+	},
+	vintage: {
+		name: "Vintage",
+		colors: {
+			text: "#57534e",
+			background: "#fdf5e6",
+			header: "#d97706",
+			footer: "#fbbf24"
+		},
+		font: "'Times New Roman', Times, serif"
+	}
+};
+---
+
+<div class="theme-selector">
+	<h3>Select Theme</h3>
+	<div class="theme-options">
+		{Object.entries(themes).map(([key, theme]) => (
+			<button 
+				class="theme-option" 
+				data-theme={key}
+				style={`background: ${theme.colors.background}; color: ${theme.colors.text}; font-family: ${theme.font}; border: 2px solid ${theme.colors.header};`}
+				onClick={`setTheme('${key}')`}
+			>
+				{theme.name}
+			</button>
+		))}
+	</div>
+</div>
+
+<script is:inline>
+	function setTheme(themeKey) {
+		// Store the selected theme in localStorage
+		localStorage.setItem('selected-theme', themeKey);
+		
+		// Apply the theme immediately
+		applyTheme(themeKey);
+	}
+	
+	function applyTheme(themeKey) {
+		const themes = {
+			default: {
+				name: "Default",
+				colors: {
+					text: "#333",
+					background: "#fff",
+					header: "#2d3748",
+					footer: "#edf2f7"
+				},
+				font: "system-ui"
+			},
+			dark: {
+				name: "Dark Mode",
+				colors: {
+					text: "#e2e8f0",
+					background: "#1a202c",
+					header: "#2d3748",
+					footer: "#2d3748"
+				},
+				font: "Georgia, serif"
+			},
+			ocean: {
+				name: "Ocean Breeze",
+				colors: {
+					text: "#0c4a6e",
+					background: "#f0f9ff",
+					header: "#0ea5e9",
+					footer: "#7dd3fc"
+				},
+				font: "'Courier New', Courier, monospace"
+			},
+			vintage: {
+				name: "Vintage",
+				colors: {
+					text: "#57534e",
+					background: "#fdf5e6",
+					header: "#d97706",
+					footer: "#fbbf24"
+				},
+				font: "'Times New Roman', Times, serif"
+			}
+		};
+		
+		const theme = themes[themeKey] || themes.default;
+		const root = document.documentElement;
+		
+		root.style.setProperty('--text-color', theme.colors.text);
+		root.style.setProperty('--bg-color', theme.colors.background);
+		root.style.setProperty('--header-bg', theme.colors.header);
+		root.style.setProperty('--footer-bg', theme.colors.footer);
+		root.style.setProperty('--font-family', theme.font);
+	}
+	
+	// Apply saved theme on page load
+	document.addEventListener('DOMContentLoaded', () => {
+		const savedTheme = localStorage.getItem('selected-theme') || 'default';
+		applyTheme(savedTheme);
+	});
+	
+	// Also apply theme when navigating to a new page
+	window.addEventListener('astro:page-load', () => {
+		const savedTheme = localStorage.getItem('selected-theme') || 'default';
+		applyTheme(savedTheme);
+	});
+</script>
+
+<style>
+	.theme-selector {
+		margin: 2rem 0;
+		padding: 1rem;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.5rem;
+		background-color: var(--footer-bg, #edf2f7);
+	}
+
+	.theme-selector h3 {
+		margin-top: 0;
+		text-align: center;
+		color: var(--text-color, #333);
+	}
+
+	.theme-options {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	.theme-option {
+		padding: 0.75rem 1rem;
+		border-radius: 0.25rem;
+		cursor: pointer;
+		transition: transform 0.2s, box-shadow 0.2s;
+		font-weight: bold;
+	}
+
+	.theme-option:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+</style>

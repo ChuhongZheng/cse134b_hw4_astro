@@ -21,6 +21,7 @@ const { title, date, description, slug } = Astro.props;
 		border-bottom: 1px solid #e2e8f0;
 		padding-bottom: 1.5rem;
 		margin-bottom: 1.5rem;
+		color: var(--text-color, #333);
 	}
 
 	.blog-post-preview h2 {
@@ -28,7 +29,7 @@ const { title, date, description, slug } = Astro.props;
 	}
 
 	.blog-post-preview h2 a {
-		color: #2d3748;
+		color: var(--text-color, #333);
 		text-decoration: none;
 	}
 
