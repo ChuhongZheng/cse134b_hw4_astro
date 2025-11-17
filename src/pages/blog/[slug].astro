@@ -3,13 +3,17 @@ import BlogLayout from '../../layouts/BlogLayout.astro';
 import FullBlogPost from '../../components/FullBlogPost.astro';
 
 export function getStaticPaths() {
-	return [
-		{ params: { slug: "getting-started-with-astro" } },
-		{ params: { slug: "understanding-astro-islands" } },
-		{ params: { slug: "building-a-blog-with-astro" } },
-		{ params: { slug: "optimizing-astro-performance" } },
-		{ params: { slug: "using-view-transitions-in-astro" } }
+	const slugs = [
+		"getting-started-with-astro",
+		"understanding-astro-islands",
+		"building-a-blog-with-astro",
+		"optimizing-astro-performance",
+		"using-view-transitions-in-astro"
 	];
+	
+	return slugs.map(slug => ({
+		params: { slug }
+	}));
 }
 
 const blogPosts = {
