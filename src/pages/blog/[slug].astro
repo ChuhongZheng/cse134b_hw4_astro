@@ -181,15 +181,13 @@ export default defineConfig({
 		props: { post: blogPosts[slug] },
 	}));
 }
-
-const { post } = Astro.props;
 ---
 
 <BlogLayout>
-	<div slot="title">{post.title} - My Astro Blog</div>
+	<div slot="title">{Astro.props.post.title} - My Astro Blog</div>
 	<FullBlogPost 
-		title={post.title}
-		date={post.date}
-		content={post.content}
+		title={Astro.props.post.title}
+		date={Astro.props.post.date}
+		content={Astro.props.post.content}
 	/>
 </BlogLayout>
